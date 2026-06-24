@@ -340,10 +340,18 @@ else:
                 </a>
                 """, unsafe_allow_html=True)
         
-        # 🌟 변경 사항: 타 지역 검색 오류 방지를 위해 "이름" 대신 "주소"를 지도 검색어로 넘김
-        map_search_query = address.strip() if address.strip() else facility['시설기관명']
-        encoded_query = urllib.parse.quote(map_search_query)
+        # 🌟 타지역 검색 방지용 정제된 주소 생성
+        addr_for_map = address.split('(')[0].split(',')[0].strip()
+        # 가평군내 시설이므로 가평군이 빠져있다면 추가해서 검색 정확도 향상
+        if addr_for_map and "가평" not in addr_for_map and "경기" not in addr_for_map:
+            addr_for_map = "경기도 가평군 " + addr_for_map
+            
+        map_search_query = addr_for_map if addr_for_map else facility['시설기관명']
         
+        # URL 인코딩 수행
+        encoded_query = urllib.parse.quote(map_search_query.encode('utf-8'))
+        
+        # 🌟 T맵 충돌(새 탭 오류) 해결을 위해 T맵만 target="_blank" 속성 제거
         st.markdown(f"""
         <div style="display:flex; gap:6px; margin:20px 0 10px 0; width:100%;">
             <a href="https://map.kakao.com/link/search/{encoded_query}" target="_blank" style="flex:1; text-decoration:none; min-width:0;">
