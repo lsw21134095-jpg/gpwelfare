@@ -2,7 +2,7 @@ import streamlit as st
 # ⭐ 반드시 코드의 가장 최상단(첫 번째 스트림릿 명령행)에 위치해야 합니다!
 st.set_page_config(
     page_title="가평군 사회복지시설 검색",  # 카톡 제목에 뜰 글자
-    page_icon="📍",                           # 브라우저 탭에 뜰 아이콘
+    page_icon="gpssn 로고.png",                           # 브라우저 탭에 뜰 아이콘
     layout="wide"                            # 화면을 넓게 쓰는 옵션 (기존에 있었다면 유지)
 )
 import pandas as pd
