@@ -340,18 +340,14 @@ else:
                 </a>
                 """, unsafe_allow_html=True)
         
-        # 🌟 타지역 검색 방지용 정제된 주소 생성
         addr_for_map = address.split('(')[0].split(',')[0].strip()
-        # 가평군내 시설이므로 가평군이 빠져있다면 추가해서 검색 정확도 향상
         if addr_for_map and "가평" not in addr_for_map and "경기" not in addr_for_map:
             addr_for_map = "경기도 가평군 " + addr_for_map
             
         map_search_query = addr_for_map if addr_for_map else facility['시설기관명']
-        
-        # URL 인코딩 수행
         encoded_query = urllib.parse.quote(map_search_query.encode('utf-8'))
         
-        # 🌟 T맵 충돌(새 탭 오류) 해결을 위해 T맵만 target="_blank" 속성 제거
+        # 🌟 핵심 수정: T맵에 target="_blank" 추가하여 기존 화면이 에러 페이지로 날아가는 브라우저 버그 방지
         st.markdown(f"""
         <div style="display:flex; gap:6px; margin:20px 0 10px 0; width:100%;">
             <a href="https://map.kakao.com/link/search/{encoded_query}" target="_blank" style="flex:1; text-decoration:none; min-width:0;">
@@ -364,7 +360,7 @@ else:
                     🟢 네이버맵
                 </div>
             </a>
-            <a href="tmap://search?name={encoded_query}" style="flex:1; text-decoration:none; min-width:0;">
+            <a href="tmap://search?name={encoded_query}" target="_blank" style="flex:1; text-decoration:none; min-width:0;">
                 <div style="width:100%; text-align:center; padding:10px 0px; background-color:#000000; color:#FFFFFF; border-radius:6px; font-weight:bold; font-size:12px; cursor:pointer; box-shadow: 0px 1px 4px rgba(0,0,0,0.15); white-space:nowrap; overflow:hidden;">
                     🔴 T맵
                 </div>
